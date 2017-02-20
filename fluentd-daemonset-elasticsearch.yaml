@@ -17,12 +17,13 @@ spec:
     spec:
       containers:
       - name: fluentd
-        image: quay.io/fluent/fluentd-kubernetes-daemonset
+        image: 42company/fluentd-kubernetes-daemonset
         env:
-          - name:  FLUENT_ELASTICSEARCH_HOST
-            value: "elasticsearch-logging"
-          - name:  FLUENT_ELASTICSEARCH_PORT
-            value: "9200"
+          - name:  FLUENT_ELASTICSEARCH_HOSTS
+            valueFrom:
+              configMapKeyRef:
+                name: fluentd-config
+                key: fluent-elasticsearch-hosts
         resources:
           limits:
             memory: 200Mi
